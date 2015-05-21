@@ -1,12 +1,11 @@
 angular.module('starter.controllers', [])
 
-    .controller('RestaurantsCtrl', function($scope) {})
+    .controller('RestaurantsCtrl', function($scope, Restaurants) {
+        $scope.venues = Restaurants.all();
+    })
 
     .controller('LocationCtrl', function($scope, Chats) {
-        $scope.chats = Chats.all();
-        $scope.remove = function(chat) {
-            Chats.remove(chat);
-        }
+
     })
 
     .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
