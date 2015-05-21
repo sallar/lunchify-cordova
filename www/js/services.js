@@ -26,8 +26,8 @@ angular.module('starter.services', [])
                     return menus[venueId];
                 }
                 else {
-                    ref = new Firebase("https://lunchify.firebaseio.com/areas/keilaniemi/by_date/2015-05-21/" + venueId);
-                    data = $firebaseObject(ref);
+                    ref = new Firebase("https://lunchify.firebaseio.com/areas/keilaniemi/meals/" + venueId + "/2015-05-21");
+                    data = $firebaseArray(ref);
                     menus[venueId] = data;
                     return data;
                 }

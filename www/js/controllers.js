@@ -16,6 +16,7 @@ angular.module('starter.controllers', [])
         // Hide Loading
         $scope.info.$loaded()
             .then(function() {
+                console.log($scope.info);
                 $ionicLoading.hide();
             });
 
