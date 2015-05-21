@@ -40,6 +40,15 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers', 'starter.
                     }
                 }
             })
+            .state('tab.venue-detail', {
+                url: '/venue/:venueId',
+                views: {
+                    'tab-restaurants': {
+                        templateUrl: 'templates/venue-detail.html',
+                        controller: 'VenueDetailCtrl'
+                    }
+                }
+            })
 
             .state('tab.location', {
                 url: '/location',
@@ -47,15 +56,6 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers', 'starter.
                     'tab-location': {
                         templateUrl: 'templates/tab-location.html',
                         controller: 'LocationCtrl'
-                    }
-                }
-            })
-            .state('tab.chat-detail', {
-                url: '/chats/:chatId',
-                views: {
-                    'tab-chats': {
-                        templateUrl: 'templates/chat-detail.html',
-                        controller: 'ChatDetailCtrl'
                     }
                 }
             })

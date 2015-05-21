@@ -1,10 +1,10 @@
 <ion-view view-title="Restaurants">
     <ion-content>
         <ion-list>
-            <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="venue in venues" type="item-text-wrap" href="#/tab/venue/{{venue.$id}}">
+            <ion-item class="item-thumbnail-left item-icon-right" ng-repeat="venue in venues" type="item-text-wrap" href="#/tab/venue/{{venue.$id}}">
                 <img ng-src="{{venue.face}}">
-                <h2>{{venue.scrape_name}}</h2>
-                <p>{{venue.street}}</p>
+                <h2>{{venue.name}}</h2>
+                <p>{{venue.street}}<br>{{venue.zip}}<br>{{venue.city}}</p>
                 <i class="icon ion-chevron-right icon-accessory"></i>
             </ion-item>
         </ion-list>

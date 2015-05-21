@@ -1,15 +1,15 @@
 angular.module('starter.services', [])
 
-    .factory('Restaurants', function($firebaseArray) {
+    .factory('Restaurants', function($firebaseArray, $firebaseObject) {
         var ref    = new Firebase("https://lunchify.firebaseio.com/areas/keilaniemi/venues"),
             data   = $firebaseArray(ref),
-            venues = [];
+            venues = [],
+            menus  = {};
 
         data.$loaded()
             .then(function() {
                 data.forEach(function(item) {
                     venues.push(item);
-                    console.log(item);
                 });
             })
             .catch(function() {
@@ -20,12 +20,21 @@ angular.module('starter.services', [])
             all: function() {
                 return venues;
             },
-            remove: function(venue) {
-                venues.splice(venues.indexOf(venue), 1);
+            getMenu: function(venueId) {
+                var ref, data;
+                if( menus[venueId] ) {
+                    return menus[venueId];
+                }
+                else {
+                    ref = new Firebase("https://lunchify.firebaseio.com/areas/keilaniemi/by_date/2015-05-21/" + venueId);
+                    data = $firebaseObject(ref);
+                    menus[venueId] = data;
+                    return data;
+                }
             },
             get: function(venueId) {
                 for (var i = 0; i < venues.length; i++) {
-                    if (venues[i].id === parseInt(venueId)) {
+                    if (venues[i].$id === venueId) {
                         return venues[i];
                     }
                 }

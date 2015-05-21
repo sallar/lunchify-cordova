@@ -1,0 +1,11 @@
+<ion-view view-title="{{venue.name || info.venue.name}}">
+    <ion-content>
+        <p>{{info.venue.name}}</p>
+        <ion-list>
+            <ion-item ng-repeat="meal in info.meals">
+                <h2>{{meal.name}}</h2>
+                <p>{{meal.name_fi}}</p>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

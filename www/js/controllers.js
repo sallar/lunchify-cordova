@@ -1,15 +1,24 @@
 angular.module('starter.controllers', [])
 
-    .controller('RestaurantsCtrl', function($scope, Restaurants) {
+    .controller('RestaurantsCtrl', function($scope, Restaurants, $ionicLoading) {
         $scope.venues = Restaurants.all();
     })
 
-    .controller('LocationCtrl', function($scope, Chats) {
+    .controller('VenueDetailCtrl', function($scope, $stateParams, Restaurants, $ionicLoading) {
+        $scope.venue = Restaurants.get($stateParams.venueId);
+        $scope.info  = Restaurants.getMenu($stateParams.venueId);
 
-    })
+        // Show Loading
+        $ionicLoading.show({
+            template: 'Loading...'
+        });
 
-    .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-        $scope.chat = Chats.get($stateParams.chatId);
+        // Hide Loading
+        $scope.info.$loaded()
+            .then(function() {
+                $ionicLoading.hide();
+            });
+
     })
 
     .controller('SettingsCtrl', function($scope) {
