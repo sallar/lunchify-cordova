@@ -7674,3 +7674,22 @@ a.button {
   opacity: 0;
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
+
+.format-meal-info .diet {
+  display: inline-block;
+  background-color: #f8f8f8;
+  text-decoration: none;
+  color: #929292;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: .9em;
+  padding: 1px 3px;
+  border-radius: 2px; }
+
+.item-avatar-not-round img[ng-src] {
+  border-radius: 3px !important; }
+
+.badge-distance {
+  top: 27px !important;
+  color: #929292 !important; }

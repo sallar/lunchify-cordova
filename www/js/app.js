@@ -1,16 +1,25 @@
-angular.module('starter', ['ionic', 'firebase', 'starter.controllers', 'starter.services'])
+String.prototype.lpad = function(padString, length) {
+    var str = this;
+    while (str.length < length)
+        str = padString + str;
+    return str;
+};
 
-    .run(function($ionicPlatform) {
+
+angular.module('starter', ['ionic', 'firebase', 'ngCordova', 'starter.controllers', 'starter.services'])
+
+    .run(function($ionicPlatform, $cordovaGeolocation, Location) {
         $ionicPlatform.ready(function() {
-            // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-            // for form inputs)
-            if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
-                cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-            }
             if (window.StatusBar) {
-                // org.apache.cordova.statusbar required
                 StatusBar.styleLightContent();
             }
+
+            $cordovaGeolocation.getCurrentPosition()
+                .then(function(pos) {
+                    Location.set({lat: pos.coords.latitude, lng: pos.coords.longitude});
+                }, function(err) {
+                    alert('Error Error!');
+                });
         });
     })
 
@@ -50,12 +59,12 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers', 'starter.
                 }
             })
 
-            .state('tab.location', {
-                url: '/location',
+            .state('tab.today', {
+                url: '/today',
                 views: {
-                    'tab-location': {
-                        templateUrl: 'templates/tab-location.html',
-                        controller: 'LocationCtrl'
+                    'tab-today': {
+                        templateUrl: 'templates/tab-today.html',
+                        controller: 'TodayCtrl'
                     }
                 }
             })
@@ -73,4 +82,16 @@ angular.module('starter', ['ionic', 'firebase', 'starter.controllers', 'starter.
         // if none of the above states are matched, use this as the fallback
         $urlRouterProvider.otherwise('/tab/restaurants');
 
+    })
+
+    .filter('removeHref', function () {
+        return function (value) {
+            return (value || "").replace(/href\=\"(\#\w+)+\"/g, '');
+        };
+    })
+
+    .filter('distance', function () {
+        return function (value) {
+            return (value < 1) ? parseInt(value * 1000) + ' m' : value.toPrecision(2) + ' km';
+        };
     });

@@ -1,6 +1,10 @@
 angular.module('starter.controllers', [])
 
     .controller('RestaurantsCtrl', function($scope, Restaurants, $ionicLoading) {
+        // Show Loading
+        $ionicLoading.show({
+            template: 'Loading...'
+        });
         $scope.venues = Restaurants.all();
     })
 
@@ -16,7 +20,6 @@ angular.module('starter.controllers', [])
         // Hide Loading
         $scope.info.$loaded()
             .then(function() {
-                console.log($scope.info);
                 $ionicLoading.hide();
             });
 

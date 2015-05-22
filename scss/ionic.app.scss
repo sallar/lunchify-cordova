@@ -21,3 +21,30 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
+
+
+.format-meal-info {
+    .diet {
+        display: inline-block;
+        background-color: $stable;
+        text-decoration: none;
+        color: darken($stable, 40%);
+        line-height: 1;
+        text-align: center;
+        text-transform: uppercase;
+        font-size: .9em;
+        padding: 1px 3px;
+        border-radius: 2px;
+    }
+}
+
+.item-avatar-not-round {
+    img[ng-src] {
+        border-radius: 3px !important;
+    }
+}
+
+.badge-distance{
+    top: 27px !important;
+    color: darken($stable, 40%) !important;
+}

@@ -1,20 +1,54 @@
 angular.module('starter.services', [])
 
-    .factory('Restaurants', function($firebaseArray, $firebaseObject) {
+    .factory('Restaurants', function($firebaseArray, $firebaseObject, Location, $ionicLoading) {
         var ref    = new Firebase("https://lunchify.firebaseio.com/areas/keilaniemi/venues"),
             data   = $firebaseArray(ref),
             venues = [],
             menus  = {};
 
-        data.$loaded()
-            .then(function() {
-                data.forEach(function(item) {
-                    venues.push(item);
+        var calcDistance = function(startPoint, endPoint) {
+            var RADIANS = Math.PI/180;
+            var EARTH_RADIUS = 6371;
+
+            var lat1, lat2, lng1, lng2;
+            var x, y, a, c;
+
+            lat1 = parseFloat(startPoint.lat) * RADIANS;
+            lat2 = parseFloat(endPoint.lat) * RADIANS;
+
+            lng1 = parseFloat(startPoint.lng) * RADIANS;
+            lng2 = parseFloat(endPoint.lng) * RADIANS;
+
+            x = Math.sin((lat2-lat1)/2);
+            y = Math.sin((lng2-lng1)/2);
+
+            // Harvesine formula
+            a = x * x + Math.cos(lat1) * Math.cos(lat2) *y * y;
+            c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+            // distance
+            return EARTH_RADIUS * c;
+        };
+
+        Location.get().then(function(start) {
+            data.$loaded()
+                .then(function() {
+                    $ionicLoading.hide();
+                    data.forEach(function(item) {
+                        item.distance = calcDistance(start, {
+                            lat: item.lat,
+                            lng: item.lng
+                        });
+                        venues.push(item);
+                    });
+                    venues.sort(function(a, b) {
+                        return (a.distance - b.distance);
+                    });
+                })
+                .catch(function() {
+                    console.log('Error');
                 });
-            })
-            .catch(function() {
-                console.log('Error');
-            });
+        });
 
         return {
             all: function() {
@@ -26,7 +60,13 @@ angular.module('starter.services', [])
                     return menus[venueId];
                 }
                 else {
-                    ref = new Firebase("https://lunchify.firebaseio.com/areas/keilaniemi/meals/" + venueId + "/2015-05-21");
+                    var dateObj = new Date(),
+                        dateStr =
+                            dateObj.getFullYear() + '-' +
+                            (dateObj.getMonth() + 1).toString().lpad('0', 2) + '-' +
+                            dateObj.getDate().toString().lpad('0', 2);
+
+                    ref = new Firebase("https://lunchify.firebaseio.com/areas/keilaniemi/meals/" + venueId + "/" + dateStr);
                     data = $firebaseArray(ref);
                     menus[venueId] = data;
                     return data;
@@ -34,11 +74,32 @@ angular.module('starter.services', [])
             },
             get: function(venueId) {
                 for (var i = 0; i < venues.length; i++) {
-                    if (venues[i].$id === venueId) {
+                    if (venues[i].id === venueId) {
                         return venues[i];
                     }
                 }
                 return null;
             }
         };
+    })
+
+    .factory('Location', function($q) {
+        var coords = null;
+
+        return{
+            get: function() {
+                var _this = this;
+                return $q(function(resolve, rejext) {
+                    window.setInterval(function() {
+                        if( _this.coords ) {
+                            resolve(_this.coords);
+                        }
+                    }, 5);
+                });
+            },
+
+            set: function(coords) {
+                this.coords = coords;
+            }
+        }
     });
