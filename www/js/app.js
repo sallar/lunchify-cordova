@@ -5,7 +5,6 @@ String.prototype.lpad = function(padString, length) {
     return str;
 };
 
-
 angular.module('starter', ['ionic', 'firebase', 'ngCordova', 'starter.controllers', 'starter.services'])
 
     .run(function($ionicPlatform, $cordovaGeolocation, Location) {
@@ -55,6 +54,15 @@ angular.module('starter', ['ionic', 'firebase', 'ngCordova', 'starter.controller
                     'tab-restaurants': {
                         templateUrl: 'templates/venue-detail.html',
                         controller: 'VenueDetailCtrl'
+                    }
+                }
+            })
+            .state('tab.venue-map', {
+                url: '/map/:venueId',
+                views: {
+                    'tab-restaurants': {
+                        templateUrl: 'templates/venue-map.html',
+                        controller: 'MapCtrl'
                     }
                 }
             })

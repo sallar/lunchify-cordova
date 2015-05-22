@@ -1,5 +1,9 @@
-<ion-view view-title="Chats">
+<ion-view view-title="Today">
   <ion-content>
-
+    <ion-list>
+      <ion-item ng-repeat="item in items" ng-class="item.type == 'venue' ? 'item-divider' : ''" class="format-meal-info">
+        <h2 ng-bind-html="(item.type == 'venue' ? item.title : (item.name) ? item.name : item.name_fi) | removeHref"></h2>
+      </ion-item>
+    </ion-list>
   </ion-content>
 </ion-view>

@@ -36,6 +36,10 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
         padding: 1px 3px;
         border-radius: 2px;
     }
+
+    &:first-child{
+        border-top: none !important;
+    }
 }
 
 .item-avatar-not-round {

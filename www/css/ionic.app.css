@@ -7686,6 +7686,8 @@ a.button {
   font-size: .9em;
   padding: 1px 3px;
   border-radius: 2px; }
+.format-meal-info:first-child {
+  border-top: none !important; }
 
 .item-avatar-not-round img[ng-src] {
   border-radius: 3px !important; }

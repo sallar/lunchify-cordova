@@ -1,11 +1,11 @@
 angular.module('starter.controllers', [])
 
     .controller('RestaurantsCtrl', function($scope, Restaurants, $ionicLoading) {
+        $scope.venues = Restaurants.all();
         // Show Loading
         $ionicLoading.show({
             template: 'Loading...'
         });
-        $scope.venues = Restaurants.all();
     })
 
     .controller('VenueDetailCtrl', function($scope, $stateParams, Restaurants, $ionicLoading) {
@@ -22,11 +22,23 @@ angular.module('starter.controllers', [])
             .then(function() {
                 $ionicLoading.hide();
             });
-
     })
 
-    .controller('SettingsCtrl', function($scope) {
-        $scope.settings = {
-            enableFriends: true
-        };
+    .controller('MapCtrl', function($scope, $stateParams, Restaurants, $ionicLoading) {
+        // Show Loadin
+        //$ionicLoading.show({
+        //    template: 'Loading...'
+        //});
+        //$scope.venue = Restaurants.get($stateParams.venueId);
+        //
+        //var div = document.getElementById("map");
+        ////map = plugin.google.maps.Map.getMap(div);
+    })
+
+    .controller('TodayCtrl', function($scope, $ionicLoading, AllVenues) {
+        // Show Loading
+        $ionicLoading.show({
+            template: 'Loading...'
+        });
+        $scope.items = AllVenues.all();
     });

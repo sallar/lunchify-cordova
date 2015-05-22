@@ -30,28 +30,28 @@ angular.module('starter.services', [])
             return EARTH_RADIUS * c;
         };
 
-        Location.get().then(function(start) {
-            data.$loaded()
-                .then(function() {
-                    $ionicLoading.hide();
-                    data.forEach(function(item) {
-                        item.distance = calcDistance(start, {
-                            lat: item.lat,
-                            lng: item.lng
-                        });
-                        venues.push(item);
-                    });
-                    venues.sort(function(a, b) {
-                        return (a.distance - b.distance);
-                    });
-                })
-                .catch(function() {
-                    console.log('Error');
-                });
-        });
-
         return {
             all: function() {
+                Location.get().then(function(start) {
+                    data.$loaded()
+                        .then(function() {
+                            $ionicLoading.hide();
+                            data.forEach(function(item) {
+                                item.distance = calcDistance(start, {
+                                    lat: item.lat,
+                                    lng: item.lng
+                                });
+                                venues.push(item);
+                            });
+                            venues.sort(function(a, b) {
+                                return (a.distance - b.distance);
+                            });
+                        })
+                        .catch(function() {
+                            console.log('Error');
+                        });
+                });
+
                 return venues;
             },
             getMenu: function(venueId) {
@@ -100,6 +100,51 @@ angular.module('starter.services', [])
 
             set: function(coords) {
                 this.coords = coords;
+            }
+        }
+    })
+
+    .factory('AllVenues', function($firebaseArray, Restaurants, $ionicLoading) {
+        var ref    = new Firebase("https://lunchify.firebaseio.com/areas/keilaniemi/venues"),
+            data   = $firebaseArray(ref),
+            menus  = {},
+            ret    = [];
+
+
+        data.$loaded().then(function() {
+            data.forEach(function(item, i) {
+                var menu = Restaurants.getMenu(item.id);
+                menu.$loaded().then(function() {
+                    menus[item.id] = {
+                        venue: item,
+                        meals: menu
+                    };
+
+                    if( i == data.length - 1 ) {
+                        for(var j in menus) {
+                            var obj = menus[j];
+                            ret.push({
+                                title: obj.venue.name,
+                                type: 'venue'
+                            })
+
+                            obj.meals.forEach(function(meal) {
+                                ret.push({
+                                    name: meal.name,
+                                    name_fi: meal.name_fi,
+                                    type: 'food'
+                                });
+                            });
+                        }
+                        $ionicLoading.hide();
+                    }
+                });
+            });
+        });
+
+        return {
+            all: function() {
+                return ret;
             }
         }
     });
