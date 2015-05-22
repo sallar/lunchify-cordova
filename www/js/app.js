@@ -77,6 +77,16 @@ angular.module('starter', ['ionic', 'firebase', 'ngCordova', 'starter.controller
                 }
             })
 
+            .state('tab.favorites', {
+                url: '/favorites',
+                views: {
+                    'tab-favorites': {
+                        templateUrl: 'templates/tab-favorites.html',
+                        controller: 'FavoritesCtrl'
+                    }
+                }
+            })
+
             .state('tab.settings', {
                 url: '/settings',
                 views: {

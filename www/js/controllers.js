@@ -41,4 +41,12 @@ angular.module('starter.controllers', [])
             template: 'Loading...'
         });
         $scope.items = AllVenues.all();
+    })
+
+    .controller('FavoritesCtrl', function($scope) {
+
+    })
+
+    .controller('SettingsCtrl', function($scope) {
+
     });

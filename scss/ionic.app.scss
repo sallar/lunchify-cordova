@@ -52,3 +52,14 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
     top: 27px !important;
     color: darken($stable, 40%) !important;
 }
+
+.empty-page{
+    .scroll{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%) !important;
+        -webkit-transform: translate(-50%,-50%) !important;
+        text-align: center;
+    }
+}
