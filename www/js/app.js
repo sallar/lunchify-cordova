@@ -7,7 +7,7 @@ String.prototype.lpad = function(padString, length) {
 
 angular.module('starter', ['ionic', 'firebase', 'ngCordova', 'starter.controllers', 'starter.services'])
 
-    .run(function($ionicPlatform, $cordovaGeolocation, Location) {
+    .run(function($ionicPlatform, $cordovaGeolocation, Location, Restaurants) {
         $ionicPlatform.ready(function() {
             if (window.StatusBar) {
                 StatusBar.styleLightContent();
@@ -15,19 +15,13 @@ angular.module('starter', ['ionic', 'firebase', 'ngCordova', 'starter.controller
 
             $cordovaGeolocation.getCurrentPosition()
                 .then(function(pos) {
-                    Location.set({lat: pos.coords.latitude, lng: pos.coords.longitude});
-                }, function(err) {
-                    alert('Error Error!');
+                    Restaurants.updateCoords({lat: pos.coords.latitude, lng: pos.coords.longitude});
                 });
         });
     })
 
     .config(function($stateProvider, $urlRouterProvider) {
 
-        // Ionic uses AngularUI Router which uses the concept of states
-        // Learn more here: https://github.com/angular-ui/ui-router
-        // Set up the various states which the app can be in.
-        // Each state's controller can be found in controllers.js
         $stateProvider
 
             // setup an abstract state for the tabs directive

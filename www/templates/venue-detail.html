@@ -3,7 +3,7 @@
         <a class="button button-icon icon ion-map" href="#/tab/map/{{venue.id}}"></a>
     </ion-nav-buttons>
     <ion-content>
-        <img class="full-image" ng-src="img/keilaranta/{{venue.simple_name}}.png">
+        <img class="full-image" ng-src="img/keilaranta/covers/{{venue.simple_name}}.jpg">
         <ion-list>
             <ion-item ng-repeat="meal in info" class="format-meal-info">
                 <h2 ng-bind-html="meal.name | removeHref"></h2>

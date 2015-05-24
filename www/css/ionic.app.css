@@ -7703,3 +7703,18 @@ a.button {
   transform: translate(-50%, -50%) !important;
   -webkit-transform: translate(-50%, -50%) !important;
   text-align: center; }
+
+.map-page .scroll, .map-page #map {
+  height: 100%; }
+
+.bar-lunchify {
+  background: #ED5565 !important; }
+
+.tabs-lunchify > .tabs, .tabs.tabs-lunchify {
+  border-color: #e8273b;
+  background-color: #ED5565;
+  background-image: linear-gradient(0deg, #e8273b, #e8273b 50%, transparent 50%);
+  color: #fff; }
+
+.tabs-striped .tab-item.tab-item-active, .tabs-striped .tab-item.active, .tabs-striped .tab-item.activated {
+  border-color: #fff !important; }

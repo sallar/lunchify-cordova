@@ -63,3 +63,22 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
         text-align: center;
     }
 }
+
+.map-page{
+    .scroll, #map{
+        height: 100%;
+    }
+}
+
+.bar-lunchify {
+    background: #ED5565 !important;
+}
+
+.tabs-lunchify > .tabs,
+.tabs.tabs-lunchify{
+    @include tab-style(#ED5565, darken(#ED5565, 10%), #fff);
+}
+
+.tabs-striped .tab-item.tab-item-active, .tabs-striped .tab-item.active, .tabs-striped .tab-item.activated {
+    border-color: #fff !important;
+}
