@@ -1,20 +1,20 @@
 angular.module('starter.controllers', [])
 
-    .controller('RestaurantsCtrl', function($scope, Restaurants, $ionicLoading) {
+    .controller('RestaurantsCtrl', function($scope, Restaurants, $ionicLoading, $cordovaGeolocation) {
         $scope.venues = Restaurants.all();
+
         // Show Loading
         $ionicLoading.show({
             template: 'Loading...'
         });
-        //window.setTimeout(function() {
-        //    var d = 50;
-        //    $scope.venues.forEach(function(v, k) {
-        //        v.distance = d;
-        //        $scope.venues[k] = v;
-        //        d--;
-        //    });
-        //    $scope.$apply();
-        //}, 3000);
+
+        $scope.doRefresh = function() {
+            $cordovaGeolocation.getCurrentPosition()
+                .then(function(pos) {
+                    $scope.$broadcast('scroll.refreshComplete');
+                    Restaurants.updateCoords({lat: pos.coords.latitude, lng: pos.coords.longitude});
+                });
+        };
     })
 
     .controller('VenueDetailCtrl', function($scope, $stateParams, Restaurants, $ionicLoading) {

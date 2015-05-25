@@ -52,6 +52,9 @@ angular.module('starter.services', [])
 
                     ref = new Firebase("https://lunchify.firebaseio.com/areas/keilaniemi/meals/" + venueId + "/" + dateStr);
                     data = $firebaseArray(ref);
+                    data.$watch(function(event) {
+                        console.log(event);
+                    });
                     menus[venueId] = data;
                     return data;
                 }

@@ -1,5 +1,9 @@
 <ion-view view-title="Restaurants">
     <ion-content>
+        <ion-refresher
+            pulling-text="Pull to update distances..."
+            on-refresh="doRefresh()">
+        </ion-refresher>
         <ion-list>
             <ion-item class="item-avatar item-avatar-not-round item-icon-right" ng-repeat="venue in venues | orderBy:'distance'" type="item-text-wrap" href="#/tab/venue/{{venue.id}}">
                 <img ng-src="img/default_logo.png">
